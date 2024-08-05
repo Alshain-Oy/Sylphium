@@ -17,10 +17,19 @@ com = serial.Serial( "COM3", 460800, timeout = 10.0 )
 # Connect to laser driver with address = 1 (default)
 laser = libSylphium.Sylphium( com, 1 )
 
+# Set driver operating range to 3A
+laser.write( libSylphium.PARAM_IRANGE, libSylphium.IRANGE_3A )
+
+# Set laser diode drive voltage to 12 V
+laser.write_float( libSylphium.PARAM_V_SET, 12.0 )
+
+# Set diode current limit to 250mA
+laser.write_float( libSylphium.PARAM_I_LIMIT, 250e-3 )
+
 # Enable laser output
 laser.enable_output( True )
 
-# ...
+# Use either external or internal modulation to drive the diode
 
 # Disable laser
 laser.enable_output( False )
