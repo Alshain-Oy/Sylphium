@@ -30,7 +30,10 @@ laser.write( libSylphium.PARAM_IRANGE, libSylphium.IRANGE_300mA ) # Set operatin
 
 # Enable main power supply and diode driver
 laser.enable_main_power( True ) # enables main power supply but not the drive circuitry
-laser.enable_output( True ) # Enables both main power supply and the drive circuitry (OBS! enable works only if interlock is ok) 
+
+# Enables both main power supply and the drive circuitry 
+# (OBS! enable works only if interlock is ok)
+laser.enable_output( True )  
 
 laser.enable_main_power( False ) # Disables main power supply
 laser.enable_output( False ) # Disables diode drive circuitry
@@ -104,13 +107,25 @@ laser.write_float( libSylphium.PARAM_TRIG_LVL 0.025 ) # Set trigger level [A]
 
 laser.write_float( libSylphium.PARAM_PD_THOLD, 1e-5 ) # Set photodiode control current threshold [A]
 
-laser.write_float( libSylphium.PARAM_TRIG_POL, libSylphium.TRIGGER_POL_POS ) # set trigger output polarity, TRIGGER_POL_POS = positive, TRIGGER_POL_NEG = inverted 
+# set trigger output polarity
+#  TRIGGER_POL_POS = positive
+#  TRIGGER_POL_NEG = inverted
+laser.write_float( libSylphium.PARAM_TRIG_POL, libSylphium.TRIGGER_POL_POS )  
 
-laser.write_float( libSylphium.PARAM_IRANGE, libSylphium.IRANGE_3A ) # Set operating range ( IRANGE_3A or IRANGE_300mA )
+# Set operating range ( IRANGE_3A or IRANGE_300mA )
+laser.write_float( libSylphium.PARAM_IRANGE, libSylphium.IRANGE_3A ) 
 
 laser.write_float( libSylphium.PARAM_PD_EN, 0 ) # 0 -> photodiode amplifier is disabled, 1 -> amplifier is enabled
-laser.write_float( libSylphium.PARAM_PD_GAIN, libSylphium.PD_GAIN_10k ) # Set photodiode amplifier gain ( PD_GAIN_1k, PD_GAIN_10k, PD_GAIN_100k, PD_GAIN_1M )
-laser.write_float( libSylphium.PARAM_PD_BIAS, libSylphium.PD_BIAS_0V ) # Set photodiode bias voltage (PD_BIAS_0V or PD_BIAS_5V)
+
+# Set photodiode amplifier gain
+#  PD_GAIN_1k
+#  PD_GAIN_10k
+#  PD_GAIN_100k
+#  PD_GAIN_1M 
+laser.write_float( libSylphium.PARAM_PD_GAIN, libSylphium.PD_GAIN_10k ) 
+
+# Set photodiode bias voltage (PD_BIAS_0V or PD_BIAS_5V)
+laser.write_float( libSylphium.PARAM_PD_BIAS, libSylphium.PD_BIAS_0V ) 
 
 laser.read( libSylphium.PARAM_POWER_EN ) # 0 -> main power is not enabled, 1 -> main power is enabled
 
@@ -139,7 +154,12 @@ laser.read( libSylphium.PARAM_OPTO_IN ) # State of the optocoupled input signal 
 laser.write( libSylphium.PARAM_IO_OUT, 0 ) # Set state of the digial output signal
 laser.write( libSylphium.PARAM_OPTO_OUT, 0 ) # Set state of the optocoupler output signal
 
-laser.write( libSylphium.PARAM_INTERLOCK_STRATEGY, libSylphium.INTERLOCK_NORMAL ) # Select interlock strategy (INTERLOCK_NORMAL = only primary, INTERLOCK_SECONDARY = require both primary and secondary interlock inputs, INTERLOCK_SECONDARY_INV, same as INTERLOCK_SECONDARY but secondary input is inverted )
+# Select interlock strategy
+#  INTERLOCK_NORMAL = only primary
+#  INTERLOCK_SECONDARY = require both primary and secondary interlock inputs,
+#  INTERLOCK_SECONDARY_INV, same as INTERLOCK_SECONDARY but secondary input is inverted )
+laser.write( libSylphium.PARAM_INTERLOCK_STRATEGY, libSylphium.INTERLOCK_NORMAL )
+
 laser.write( libSylphium.PARAM_INTERLOCK_DELAY, 2000 ) # Interlock delay [ms]
 
 laser.read( libSylphium.PARAM_SERIAL_NUMBER ) # Serial number of the device
