@@ -41,9 +41,11 @@ laser.enable_output( False ) # Disables diode drive circuitry
 # Modulation
 laser.constant_current( 0.1 ) # Drive the diode with 0.1A constant current
 
-laser.modulation( True ) # Turn on internal modulation (waveform buffer must be filled before)
+laser.modulation( True ) # Turn on internal modulation
 laser.modulation( False ) # Turn off the internal modulation
-laser.modulation( True, single_shot = True ) # Turn on the modulation for one modulation buffer round
+
+# Turn on the modulation for one modulation buffer round
+laser.modulation( True, single_shot = True ) 
 
 # note: Waveform buffer is 1000 samples long
 
@@ -94,8 +96,11 @@ laser.read_float( libSylphium.PARAM_TEMP_1 ) # Internal temperature sensor readi
 laser.read_float( libSylphium.PARAM_TEMP_2 ) # Internal temperature sensor reading [C]
 
 
-laser.read( libSylphium.PARAM_INTERLOCK_OK ) # 0 -> interlock is not ok, 1 -> interlock is ok
-laser.read( libSylphium.PARAM_LASER_OK ) # 0 -> laser cannot be enabled, 1 -> laser can be enabled
+# 0 -> interlock is not ok, 1 -> interlock is ok
+laser.read( libSylphium.PARAM_INTERLOCK_OK )
+
+# 0 -> laser cannot be enabled, 1 -> laser can be enabled 
+laser.read( libSylphium.PARAM_LASER_OK ) 
 
 laser.read( libSylphium.PARAM_TRIGGER_CNT ) # Counter for trigger events
 
@@ -115,7 +120,8 @@ laser.write_float( libSylphium.PARAM_TRIG_POL, libSylphium.TRIGGER_POL_POS )
 # Set operating range ( IRANGE_3A or IRANGE_300mA )
 laser.write_float( libSylphium.PARAM_IRANGE, libSylphium.IRANGE_3A ) 
 
-laser.write_float( libSylphium.PARAM_PD_EN, 0 ) # 0 -> photodiode amplifier is disabled, 1 -> amplifier is enabled
+# 0 -> photodiode amplifier is disabled, 1 -> amplifier is enabled
+laser.write( libSylphium.PARAM_PD_EN, 0 ) 
 
 # Set photodiode amplifier gain
 #  PD_GAIN_1k
@@ -127,7 +133,8 @@ laser.write_float( libSylphium.PARAM_PD_GAIN, libSylphium.PD_GAIN_10k )
 # Set photodiode bias voltage (PD_BIAS_0V or PD_BIAS_5V)
 laser.write_float( libSylphium.PARAM_PD_BIAS, libSylphium.PD_BIAS_0V ) 
 
-laser.read( libSylphium.PARAM_POWER_EN ) # 0 -> main power is not enabled, 1 -> main power is enabled
+# 0 -> main power is not enabled, 1 -> main power is enabled
+laser.read( libSylphium.PARAM_POWER_EN ) 
 
 
 laser.read_float( libSylphium.PARAM_PD_AVG ) # Average photodiode current [A]
@@ -145,11 +152,15 @@ laser.read_float( libSylphium.PARAM_P_RMS ) # RMS electrical power delivered to 
 
 laser.read_float( libSylphium.PARAM_VDROP ) # Current voltage drop over diode [V]
 
-laser.write( libSylphium.PARAM_PD_CTRL, 0 ) # 0 -> disable photodiode regulation, 1 -> enable photodiode regulation
+# 0 -> disable photodiode regulation, 1 -> enable photodiode regulation
+laser.write( libSylphium.PARAM_PD_CTRL, 0 ) 
 
 
-laser.read( libSylphium.PARAM_IO_IN ) # State of the digital input signal (secondary interlock input)
-laser.read( libSylphium.PARAM_OPTO_IN ) # State of the optocoupled input signal (primary interlock input )
+# State of the digital input signal (secondary interlock input)
+laser.read( libSylphium.PARAM_IO_IN )
+
+# State of the optocoupled input signal (primary interlock input )
+laser.read( libSylphium.PARAM_OPTO_IN ) 
 
 laser.write( libSylphium.PARAM_IO_OUT, 0 ) # Set state of the digial output signal
 laser.write( libSylphium.PARAM_OPTO_OUT, 0 ) # Set state of the optocoupler output signal
