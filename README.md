@@ -106,7 +106,7 @@ laser.generate_pulse( 0.1, 0.025, 0.025, sample_period = 1000 )
 ### Parameters
 ```python
 
-laser.read_float( libSylphium.PARAM_I_MEAS ) # -> Measured current [A]
+laser.read_float( libSylphium.PARAM_I_MEAS ) # Measured current [A]
 
 laser.read_float( libSylphium.PARAM_VIN ) # Power supply input voltage [V]
 
@@ -146,10 +146,10 @@ laser.write_float( libSylphium.PARAM_PD_THOLD, 1e-5 ) # Set photodiode control c
 # set trigger output polarity
 #  TRIGGER_POL_POS = positive
 #  TRIGGER_POL_NEG = inverted
-laser.write_float( libSylphium.PARAM_TRIG_POL, libSylphium.TRIGGER_POL_POS )  
+laser.write( libSylphium.PARAM_TRIG_POL, libSylphium.TRIGGER_POL_POS )  
 
 # Set operating range ( IRANGE_3A or IRANGE_300mA )
-laser.write_float( libSylphium.PARAM_IRANGE, libSylphium.IRANGE_3A ) 
+laser.write( libSylphium.PARAM_IRANGE, libSylphium.IRANGE_3A ) 
 
 # 0 -> photodiode amplifier is disabled, 1 -> amplifier is enabled
 laser.write( libSylphium.PARAM_PD_EN, 0 ) 
@@ -159,10 +159,10 @@ laser.write( libSylphium.PARAM_PD_EN, 0 )
 #  PD_GAIN_10k
 #  PD_GAIN_100k
 #  PD_GAIN_1M 
-laser.write_float( libSylphium.PARAM_PD_GAIN, libSylphium.PD_GAIN_10k ) 
+laser.write( libSylphium.PARAM_PD_GAIN, libSylphium.PD_GAIN_10k ) 
 
 # Set photodiode bias voltage (PD_BIAS_0V or PD_BIAS_5V)
-laser.write_float( libSylphium.PARAM_PD_BIAS, libSylphium.PD_BIAS_0V ) 
+laser.write( libSylphium.PARAM_PD_BIAS, libSylphium.PD_BIAS_0V ) 
 
 # 0 -> main power is not enabled, 1 -> main power is enabled
 laser.read( libSylphium.PARAM_POWER_EN ) 
