@@ -86,6 +86,20 @@ laser.generate_sine( 0.1, 0.05, 1.0, sample_period = 1 )
 
 laser.generate_pulse( 0.1, 0.05, 0.15 )
 
+### Examples
+# 80µs pulses with 25Hz repeat rate (100mA amplitude, 25mA DC offset)
+laser.generate_pulse( 0.1, 0.025, 0.002, sample_period = 40 )
+
+# 100µs pulses with 50Hz repeat rate (100mA amplitude, 25mA DC offset)
+laser.generate_pulse( 0.1, 0.025, 0.005, sample_period = 20 )
+
+# 10µs pulses with 1kHz repeat rate (100mA amplitude, 25mA DC offset)
+laser.generate_pulse( 0.1, 0.025, 0.01, sample_period = 1 )
+
+# 25ms pulses with 1Hz repeat rate (100mA amplitude, 25mA DC offset)
+laser.generate_pulse( 0.1, 0.025, 0.025, sample_period = 1000 )
+
+
 ```
 
 
