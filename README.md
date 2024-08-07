@@ -99,6 +99,21 @@ laser.generate_pulse( 0.1, 0.025, 0.01, sample_period = 1 )
 # 25ms pulses with 1Hz repeat rate (100mA amplitude, 25mA DC offset)
 laser.generate_pulse( 0.1, 0.025, 0.025, sample_period = 1000 )
 
+## Generating pulses with >1kHz repeat rate:
+# Waveform buffer length needs to be adjusted to increase repeat rate.
+# (Default length for the waveform buffer is 1000 samples)
+
+# 10µs pulse (100mA amplitude, 25mA DC offset) with 5kHz repeat rate
+laser.generate_pulse( 0.1, 0.025, 0.01, sample_period = 1 )
+laser.write( libSylphium.PARAM_MOD_LENGTH, 200 ) # 1/(200*1µs) = 5kHz
+
+# 10µs pulse (100mA amplitude, 25mA DC offset) with 10kHz repeat rate
+laser.generate_pulse( 0.1, 0.025, 0.01, sample_period = 1 )
+laser.write( libSylphium.PARAM_MOD_LENGTH, 100 ) # 1/(100*1µs) = 10kHz
+
+# 10µs pulse (100mA amplitude, 25mA DC offset) with ~15.2kHz repeat rate
+laser.generate_pulse( 0.1, 0.025, 0.01, sample_period = 1 )
+laser.write( libSylphium.PARAM_MOD_LENGTH, 66 ) # 1/(66*1µs) = 15.152kHz
 
 ```
 
