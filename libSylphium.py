@@ -129,6 +129,7 @@ INTERLOCK_SECONDARY_INV =   (2)
 MOD_RUN =                (0)
 MOD_FILL =               (1) 
 MOD_SINGLE_SHOT =        (2)
+MOD_PERIODC =            (3)
 
 MOD_SHAPE_PULSE =   (0)
 MOD_SHAPE_SINE =    (1)
@@ -326,7 +327,7 @@ class Sylphium( object ):
         self.com.write( gen_action_msg_float( self.address, OP_ICTRL, 0, current ) )
         response = self.com.read( 10 )
 
-    def modulation( self, state, single_shot = False ) -> None:
+    def modulation( self, state, single_shot = False, periodic = False ) -> None:
         self._clear_buffer()
 
         if not state:
@@ -335,7 +336,10 @@ class Sylphium( object ):
             if single_shot:
                    self.com.write( gen_action_msg( self.address, OP_MODULATION, MOD_SINGLE_SHOT, 1 ) )
             else:
-                self.com.write( gen_action_msg( self.address, OP_MODULATION, MOD_RUN, 1 ) )
+                if periodic:
+                    self.com.write( gen_action_msg( self.address, OP_MODULATION, MOD_PERIODC, 1 ) )
+                else:
+                    self.com.write( gen_action_msg( self.address, OP_MODULATION, MOD_RUN, 1 ) )
 
         #self.com.write( gen_action_msg( self.address, OP_MODULATION, key, value ) )
         response = self.com.read( 10 )
@@ -347,6 +351,7 @@ class Sylphium( object ):
         self.write_float( PARAM_MOD_PARAM2, frequency )
         self.write_float( PARAM_MOD_PARAM3, phase )
         self.write( PARAM_MOD_SAMPLERATE, sample_period )
+        self.write( PARAM_MOD_LENGTH, 1000 )
         self.com.write( gen_action_msg( self.address, OP_MODULATION, MOD_FILL, MOD_SHAPE_SINE ) )
     
     def generate_pulse( self, amplitude, offset, duty_cycle, sample_period = 1000 ):
@@ -355,6 +360,7 @@ class Sylphium( object ):
         self.write_float( PARAM_MOD_PARAM2, duty_cycle )
         self.write_float( PARAM_MOD_PARAM3, 0 )
         self.write( PARAM_MOD_SAMPLERATE, sample_period )
+        self.write( PARAM_MOD_LENGTH, 1000 )
         self.com.write( gen_action_msg( self.address, OP_MODULATION, MOD_FILL, MOD_SHAPE_PULSE ) )
     
         
