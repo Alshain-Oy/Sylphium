@@ -16,6 +16,23 @@ com = serial.Serial( "COM3", 460800, timeout = 10.0 )
 
 # Connect to laser driver with address = 1 (default)
 laser = libSylphium.Sylphium( com, 1 )
+
+# Set driver operating range to 3A
+laser.write( libSylphium.PARAM_IRANGE, libSylphium.IRANGE_3A )
+
+# Set laser diode drive voltage to 12 V
+laser.write_float( libSylphium.PARAM_V_SET, 12.0 )
+
+# Set diode current limit to 250mA
+laser.write_float( libSylphium.PARAM_I_LIMIT, 250e-3 )
+
+# Enable laser output
+laser.enable_output( True )
+
+# Use either external or internal modulation to drive the diode
+
+# Disable laser
+laser.enable_output( False )
 ```
 
 ## Snippets
@@ -28,7 +45,7 @@ laser.write_float( libSylphium.PARAM_V_SET, 5.0 ) # Set diode supply voltage to 
 laser.write_float( libSylphium.PARAM_TRIG_LVL, 0.025 ) # Set internal trigger level to 25mA
 laser.write( libSylphium.PARAM_IRANGE, libSylphium.IRANGE_300mA ) # Set operating range to 300mA
 
-# Enable main power supply and diode driver
+# Enable main power supply
 laser.enable_main_power( True ) # enables main power supply but not the drive circuitry
 
 # Enables both main power supply and the drive circuitry 
@@ -69,13 +86,42 @@ laser.generate_sine( 0.1, 0.05, 1.0, sample_period = 1 )
 
 laser.generate_pulse( 0.1, 0.05, 0.15 )
 
+### Examples
+# 80µs pulses with 25Hz repeat rate (100mA amplitude, 25mA DC offset)
+laser.generate_pulse( 0.1, 0.025, 0.002, sample_period = 40 )
+
+# 100µs pulses with 50Hz repeat rate (100mA amplitude, 25mA DC offset)
+laser.generate_pulse( 0.1, 0.025, 0.005, sample_period = 20 )
+
+# 10µs pulses with 1kHz repeat rate (100mA amplitude, 25mA DC offset)
+laser.generate_pulse( 0.1, 0.025, 0.01, sample_period = 1 )
+
+# 25ms pulses with 1Hz repeat rate (100mA amplitude, 25mA DC offset)
+laser.generate_pulse( 0.1, 0.025, 0.025, sample_period = 1000 )
+
+## Generating pulses with >1kHz repeat rate:
+# Waveform buffer length needs to be adjusted to increase repeat rate.
+# (Default length for the waveform buffer is 1000 samples)
+
+# 10µs pulse (100mA amplitude, 25mA DC offset) with 5kHz repeat rate
+laser.generate_pulse( 0.1, 0.025, 0.01, sample_period = 1 )
+laser.write( libSylphium.PARAM_MOD_LENGTH, 200 ) # 1/(200*1µs) = 5kHz
+
+# 10µs pulse (100mA amplitude, 25mA DC offset) with 10kHz repeat rate
+laser.generate_pulse( 0.1, 0.025, 0.01, sample_period = 1 )
+laser.write( libSylphium.PARAM_MOD_LENGTH, 100 ) # 1/(100*1µs) = 10kHz
+
+# 10µs pulse (100mA amplitude, 25mA DC offset) with ~15.2kHz repeat rate
+laser.generate_pulse( 0.1, 0.025, 0.01, sample_period = 1 )
+laser.write( libSylphium.PARAM_MOD_LENGTH, 66 ) # 1/(66*1µs) = 15.152kHz
+
 ```
 
 
 ### Parameters
 ```python
 
-laser.read_float( libSylphium.PARAM_I_MEAS ) # -> Measured current [A]
+laser.read_float( libSylphium.PARAM_I_MEAS ) # Measured current [A]
 
 laser.read_float( libSylphium.PARAM_VIN ) # Power supply input voltage [V]
 
@@ -115,10 +161,10 @@ laser.write_float( libSylphium.PARAM_PD_THOLD, 1e-5 ) # Set photodiode control c
 # set trigger output polarity
 #  TRIGGER_POL_POS = positive
 #  TRIGGER_POL_NEG = inverted
-laser.write_float( libSylphium.PARAM_TRIG_POL, libSylphium.TRIGGER_POL_POS )  
+laser.write( libSylphium.PARAM_TRIG_POL, libSylphium.TRIGGER_POL_POS )  
 
 # Set operating range ( IRANGE_3A or IRANGE_300mA )
-laser.write_float( libSylphium.PARAM_IRANGE, libSylphium.IRANGE_3A ) 
+laser.write( libSylphium.PARAM_IRANGE, libSylphium.IRANGE_3A ) 
 
 # 0 -> photodiode amplifier is disabled, 1 -> amplifier is enabled
 laser.write( libSylphium.PARAM_PD_EN, 0 ) 
@@ -128,10 +174,10 @@ laser.write( libSylphium.PARAM_PD_EN, 0 )
 #  PD_GAIN_10k
 #  PD_GAIN_100k
 #  PD_GAIN_1M 
-laser.write_float( libSylphium.PARAM_PD_GAIN, libSylphium.PD_GAIN_10k ) 
+laser.write( libSylphium.PARAM_PD_GAIN, libSylphium.PD_GAIN_10k ) 
 
 # Set photodiode bias voltage (PD_BIAS_0V or PD_BIAS_5V)
-laser.write_float( libSylphium.PARAM_PD_BIAS, libSylphium.PD_BIAS_0V ) 
+laser.write( libSylphium.PARAM_PD_BIAS, libSylphium.PD_BIAS_0V ) 
 
 # 0 -> main power is not enabled, 1 -> main power is enabled
 laser.read( libSylphium.PARAM_POWER_EN ) 
